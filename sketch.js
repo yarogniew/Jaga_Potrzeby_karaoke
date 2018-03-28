@@ -17,13 +17,11 @@ var millisecond;
 var startmillis;
 
 
-
 function preload() {
   myFont = loadFont('Sansation_Regular.ttf');
   result = loadStrings('tekstpiosenki.txt');
   songB = loadSound('Potrzeby.mp3');
 }
-
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -31,14 +29,8 @@ function setup() {
   angleMode(DEGREES);
   background(50);
   textFont(myFont);
-  button = createButton('stop or play again');
-  button.mousePressed(toggleSong);
-  button.position(20, shpSize/20*2);
 
   reSetup();
-
-
-
 }
 
 function draw() {
@@ -47,20 +39,18 @@ function draw() {
   var vol = amp.getLevel();
   volhistory.push(vol);
   var s = map(vol, 0, 0.5, 0, 255);
-
   j = random(0,40);
   fill(s+50*n, j, 100,  s+100);
   strokeWeight(1);
   stroke(s+50, 100, j,  s+100, s-100);
-
   push();
   translate(width / 2, height / 2);
   beginShape();
   for (var i = 0; i < 380; i+=11) {
-    var r = map(volhistory[i], 0, 1, 0, shpSize*vol*6);
-    var x = r * cos(i);
-    var y = r * sin(i);
-    curveVertex(x, y);
+      var r = map(volhistory[i], 0, 1, 0, shpSize*vol*6);
+      var x = r * cos(i);
+      var y = r * sin(i);
+      curveVertex(x, y);
   }
 
   endShape(CLOSE);
@@ -68,25 +58,24 @@ function draw() {
   if (volhistory.length > 380) {
     volhistory.splice(0, 2);
   }
-  //millisecond = (millis()-startmillis)/1000;
-  //timeOfSong = round(songB.currentTime());
-  //if(timeOfSong<songB.duration())
-  //timeOfSong = round((millis()-startmillis)/1000);
 
   pop();
-  //text(timeOfSong, width / 4, shpSize/20+65);
   if (songB.isPlaying())
   {
   timeOfSong = round((millis()-startmillis)/1000);
   karaoke();
   }
-  //text(millisecond, windowWidth/2, windowHeight/2+40);
-console.log(timeOfSong);
-console.log(songB.isPlaying());
+console.log(timeOfSong, songB.isPlaying());
+
 }
 
 function reSetup(){
-    background(50);
+  background(50);
+  button = createButton('zatrzymaj');
+  button.mousePressed(toggleSong);
+  button.position(20, shpSize/20*2);
+  button.size(100);
+
   songB.play();
   startmillis = millis();
   amp = new p5.Amplitude();
@@ -102,17 +91,17 @@ function reSetup(){
 
 function toggleSong() {
   if (songB.isPlaying()) {
-    songB.stop();
+      songB.stop();
+      button = createButton('graj');
+      button.mousePressed(toggleSong);
+      button.position(20, shpSize/20*2);
+      button.size(100);
   } else {
-    //songB.play();
-    //startmillis = millis();
-    //t=0;
     reSetup();
   }
 }
 
 function karaoke(){
-
   if (timeOfSong == karaokeTime[t]){
   noStroke();
   fill(50);
@@ -122,10 +111,4 @@ function karaoke(){
   fill(180);
   text(result[t], width / 2, shpSize/20+5);
   t++;}
-    // background(50);
-    // fill(180);
-    // noStroke();
-    //   textAlign(LEFT);
-    // textSize(shpSize/12);
-    // text(songB.currentTime(), windowWidth/2, windowHeight/2);
 }
