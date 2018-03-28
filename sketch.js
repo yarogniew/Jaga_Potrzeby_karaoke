@@ -65,17 +65,16 @@ function draw() {
   timeOfSong = round((millis()-startmillis)/1000);
   karaoke();
   }
-console.log(timeOfSong, songB.isPlaying());
+//console.log(timeOfSong, songB.isPlaying());
 
 }
 
 function reSetup(){
   background(50);
-  button = createButton('zatrzymaj');
+  button = createButton('Zatrzymaj');
   button.mousePressed(toggleSong);
   button.position(20, shpSize/20*2);
   button.size(100);
-
   songB.play();
   startmillis = millis();
   amp = new p5.Amplitude();
@@ -92,7 +91,7 @@ function reSetup(){
 function toggleSong() {
   if (songB.isPlaying()) {
       songB.stop();
-      button = createButton('graj');
+      button = createButton('Od nowa');
       button.mousePressed(toggleSong);
       button.position(20, shpSize/20*2);
       button.size(100);
