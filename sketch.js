@@ -16,13 +16,7 @@ var karaokeTime = [6, 12, 19, 25, 37, 44, 50, 56, 62, 68, 74, 80];
 var millisecond;
 var startmillis;
 
-function toggleSong() {
-  if (songB.isPlaying()) {
-    songB.stop();
-  } else {
-    songB.play();
-  }
-}
+
 
 function preload() {
 
@@ -87,16 +81,28 @@ function draw() {
   //millisecond = (millis()-startmillis)/1000;
   //timeOfSong = round(songB.currentTime());
   //if(timeOfSong<songB.duration())
-  timeOfSong = round((millis()-startmillis)/1000);
+  //timeOfSong = round((millis()-startmillis)/1000);
 
   pop();
   //text(timeOfSong, width / 4, shpSize/20+65);
   if (songB.isPlaying())
   {
+  timeOfSong = round((millis()-startmillis)/1000);
   karaoke();
   }
   //text(millisecond, windowWidth/2, windowHeight/2+40);
-//console.log(timeOfSong);
+console.log(timeOfSong);
+console.log(songB.isPlaying());
+}
+
+function toggleSong() {
+  if (songB.isPlaying()) {
+    songB.stop();
+  } else {
+    songB.play();
+    startmillis = millis();
+    t=0;
+  }
 }
 
 function karaoke(){
