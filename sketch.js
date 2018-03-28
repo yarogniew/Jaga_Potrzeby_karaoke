@@ -19,34 +19,24 @@ var startmillis;
 
 
 function preload() {
-
   myFont = loadFont('Sansation_Regular.ttf');
   result = loadStrings('tekstpiosenki.txt');
   songB = loadSound('Potrzeby.mp3');
-
 }
 
-function setup() {
 
+function setup() {
   createCanvas(windowWidth, windowHeight);
   shpSize = min(windowWidth, windowHeight)* 0.8; //choose the smaller side of the screen
   angleMode(DEGREES);
   background(50);
-
   textFont(myFont);
+  button = createButton('stop or play again');
+  button.mousePressed(toggleSong);
+  button.position(20, shpSize/20*2);
 
-button = createButton('stop and reload');
-button.mousePressed(toggleSong);
-button.position(20, shpSize/20*2);
+  reSetup();
 
-  songB.play();
-  startmillis = millis();
-  amp = new p5.Amplitude();
-  amp.setInput(songB);
-  t = 0;
-  textAlign(CENTER);
-  textSize(shpSize/23);
-  fill(180);
 
 
 }
@@ -95,13 +85,29 @@ console.log(timeOfSong);
 console.log(songB.isPlaying());
 }
 
+function reSetup(){
+    background(50);
+  songB.play();
+  startmillis = millis();
+  amp = new p5.Amplitude();
+  amp.setInput(songB);
+  t = 0;
+  textAlign(CENTER);
+  textSize(shpSize/23);
+  fill(180);
+  noStroke();
+  fill(50);
+  rect(0, 0, windowWidth, shpSize/20*2 )
+}
+
 function toggleSong() {
   if (songB.isPlaying()) {
     songB.stop();
   } else {
-    songB.play();
-    startmillis = millis();
-    t=0;
+    //songB.play();
+    //startmillis = millis();
+    //t=0;
+    reSetup();
   }
 }
 
